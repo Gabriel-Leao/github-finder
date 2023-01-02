@@ -13,13 +13,16 @@ export class UserComponent {
   error = false;
 
   onSearch(userName: string): void {
-    this.userService.getUser(userName).subscribe(
-      (user) => (this.user = user),
-      (error) => {
+    this.userService.getUser(userName).subscribe({
+      next: (user) => {
+        this.error = false;
+        this.user = user;
+      },
+      error: () => {
         this.user = null;
         this.error = true;
-      }
-    );
+      },
+    });
   }
 
   constructor(private userService: UserService) {}
