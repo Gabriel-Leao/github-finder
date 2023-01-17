@@ -2,13 +2,14 @@
   margin: 0 auto;
   display: flex;
   align-items: center;
-  flex-direction: column;
   justify-content: center;
   background-color: #2b3566;
   padding: 2rem;
   border-radius: 1rem;
   gap: 1.2rem;
   max-width: 500px;
+  font-size: 1rem;
+  flex-wrap: wrap;
 }
 
 .repo-container li {
@@ -80,4 +81,33 @@ svg {
   display: flex;
   text-align: center;
   font-size: 1.4rem;
+}
+
+@media (max-width: 300px) {
+  .repo-container li {
+    font-size: 0.5rem;
+    padding: 1rem;
+  }
+
+  #stats {
+    gap: 0.5rem;
+  }
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .icon {
+    padding: 0.1rem 0.4rem;
+  }
+  .number {
+    padding: 0.1rem 0.4rem;
+  }
+
+  .repo-container a {
+    width: 100%;
+    font-size: 0.7rem;
+    padding: 0.4rem;
+  }
 }

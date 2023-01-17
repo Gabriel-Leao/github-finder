@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { catchError } from 'rxjs';
+import { Component, OnDestroy } from '@angular/core';
+import { catchError, take } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/interfaces/User';
 
@@ -8,22 +8,27 @@ import { User } from 'src/interfaces/User';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'],
 })
-export class UserComponent {
+export class UserComponent implements OnDestroy {
   user: User | null;
   error = false;
 
   onSearch(userName: string): void {
-    this.userService.getUser(userName).subscribe({
-      next: (user) => {
-        this.error = false;
-        this.user = user;
-      },
-      error: () => {
-        this.user = null;
-        this.error = true;
-      },
-    });
+    this.userService
+      .getUser(userName)
+      .pipe(take(1))
+      .subscribe({
+        next: (user) => {
+          this.error = false;
+          this.user = user;
+        },
+        error: () => {
+          this.user = null;
+          this.error = true;
+        },
+      });
   }
+
+  ngOnDestroy(): void {}
 
   constructor(private userService: UserService) {}
 }

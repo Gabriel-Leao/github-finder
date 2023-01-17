@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { take } from 'rxjs';
 import { RepositoriesService } from 'src/app/services/repositories.service';
 import { Repositories } from 'src/interfaces/Repositories';
 
@@ -15,7 +16,12 @@ export class RepositoriesComponent implements OnInit {
     const userName = this.route.snapshot.paramMap.get('userName');
     this.reposService
       .getRepositories(userName as string)
-      .subscribe((repositories) => (this.repositories = repositories));
+      .pipe(take(1))
+      .subscribe({
+        next: (repositories) => {
+          this.repositories = repositories;
+        },
+      });
   }
 
   constructor(
